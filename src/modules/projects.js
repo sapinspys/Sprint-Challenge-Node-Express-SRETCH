@@ -1,40 +1,34 @@
-export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED'
-export const INCREMENT = 'counter/INCREMENT'
-export const DECREMENT_REQUESTED = 'counter/DECREMENT_REQUESTED'
-export const DECREMENT = 'counter/DECREMENT'
+export const PROJECTS_REQUESTED = 'projects/PROJECTS_REQUESTED'
+export const PROJECTS_DELIVERED = 'projects/PROJECTS_DELIVERED'
+export const PROJECTS_DENIED = 'projects/PROJECTS_DENIED'
 
 const initialState = {
-  count: 0,
-  isIncrementing: false,
-  isDecrementing: false
+  projects: [],
+  requestingProjects: false,
+  error: null
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case INCREMENT_REQUESTED:
+    case PROJECTS_REQUESTED:
       return {
         ...state,
-        isIncrementing: true
+        requestingProjects: true,
       }
 
-    case INCREMENT:
+    case PROJECTS_DELIVERED:
       return {
         ...state,
-        count: state.count + 1,
-        isIncrementing: !state.isIncrementing
+        projects: action.payload,
+        requestingProjects: false,
+        error: null,
       }
 
-    case DECREMENT_REQUESTED:
+    case PROJECTS_DENIED:
       return {
         ...state,
-        isDecrementing: true
-      }
-
-    case DECREMENT:
-      return {
-        ...state,
-        count: state.count - 1,
-        isDecrementing: !state.isDecrementing
+        requestingProjects: false,
+        error: action.payload
       }
 
     default:
