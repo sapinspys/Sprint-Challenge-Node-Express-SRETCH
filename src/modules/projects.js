@@ -36,54 +36,26 @@ export default (state = initialState, action) => {
   }
 }
 
-export const increment = () => {
-  return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    })
+const url = 'http://localhost:4000';
 
-    dispatch({
-      type: INCREMENT
-    })
-  }
-}
+export const requestAllProjects = () => dispatch => {
+  dispatch ({ type: PROJECTS_REQUESTED });
 
-export const incrementAsync = () => {
-  return dispatch => {
-    dispatch({
-      type: INCREMENT_REQUESTED
-    })
-
-    return setTimeout(() => {
-      dispatch({
-        type: INCREMENT
+  return setTimeout(() => {
+    axios
+    .get(`${url}/api/projects`)
+    .then(res => {
+      dispatch({ 
+        type: PROJECTS_DELIVERED, 
+        payload: res.data
       })
-    }, 3000)
-  }
-}
-
-export const decrement = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
     })
-
-    dispatch({
-      type: DECREMENT
-    })
-  }
-}
-
-export const decrementAsync = () => {
-  return dispatch => {
-    dispatch({
-      type: DECREMENT_REQUESTED
-    })
-
-    return setTimeout(() => {
+    .catch(err => {
       dispatch({
-        type: DECREMENT
+        type: PROJECTS_DENIED,
+        payload: err.response
       })
-    }, 3000)
-  }
+    })
+  }, 2000)
 }
+
