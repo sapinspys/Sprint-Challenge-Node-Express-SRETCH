@@ -9,6 +9,10 @@ import {
   decrementAsync
 } from '../../modules/counter'
 
+import {
+  requestAllProjects
+} from '../../modules/projects'
+
 const Home = props => (
   <div>
     <h1>Home</h1>
@@ -29,17 +33,26 @@ const Home = props => (
     </p>
 
     <p>
-      <button onClick={() => props.changePage()}>
+      <button onClick={() => props.goToAboutPage()}>
         Go to about page via redux
+      </button>
+    </p>
+
+    <p>
+      <button onClick={() => props.goToProjectsPage()}>
+        Go to projects page via redux
       </button>
     </p>
   </div>
 )
 
-const mapStateToProps = ({ counter }) => ({
+const mapStateToProps = ({ counter, projects }) => ({
   count: counter.count,
   isIncrementing: counter.isIncrementing,
-  isDecrementing: counter.isDecrementing
+  isDecrementing: counter.isDecrementing,
+  projects: projects.projects,
+  requestingProjects: projects.requestingProjects,
+  error: projects.error
 })
 
 const mapDispatchToProps = dispatch =>
@@ -49,7 +62,9 @@ const mapDispatchToProps = dispatch =>
       incrementAsync,
       decrement,
       decrementAsync,
-      changePage: () => push('/about-us')
+      requestAllProjects,
+      goToAboutPage: () => push('/about-us'),
+      goToProjectsPage: () => push('/projects')
     },
     dispatch
   )
