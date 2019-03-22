@@ -9,10 +9,6 @@ import {
   decrementAsync
 } from '../../modules/counter'
 
-import {
-  requestAllProjects
-} from '../../modules/projects'
-
 const Home = props => (
   <div>
     <h1>Home</h1>
@@ -46,13 +42,10 @@ const Home = props => (
   </div>
 )
 
-const mapStateToProps = ({ counter, projects }) => ({
+const mapStateToProps = ({ counter }) => ({
   count: counter.count,
   isIncrementing: counter.isIncrementing,
   isDecrementing: counter.isDecrementing,
-  projects: projects.projects,
-  requestingProjects: projects.requestingProjects,
-  error: projects.error
 })
 
 const mapDispatchToProps = dispatch =>
@@ -62,7 +55,6 @@ const mapDispatchToProps = dispatch =>
       incrementAsync,
       decrement,
       decrementAsync,
-      requestAllProjects,
       goToAboutPage: () => push('/about-us'),
       goToProjectsPage: () => push('/projects')
     },
